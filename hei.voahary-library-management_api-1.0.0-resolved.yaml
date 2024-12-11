@@ -1,0 +1,286 @@
+openapi: 3.1.0
+info:
+  title: Library Management API
+  description: API for managing books and authors in a library.
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/api/v1
+paths:
+  /groups:
+    get:
+      summary: Get a list of books
+      parameters:
+      - name: groupName
+        in: query
+        description: Filter by book name
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        description: Filter by group year
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: Filter by group year
+        schema:
+          type: string
+          format: date
+      responses:
+        "200":
+          description: List of groups
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    groupName:
+                      type: string
+                    groupYear:
+                      type: string
+                      format: date
+                    promotion:
+                      type: string
+                      enum:
+                      - G
+                      - H
+                      - J
+                      - K
+                    studentNb:
+                      type: number
+    post:
+      summary: Add a new group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                groupName:
+                  type: string
+                groupYear:
+                  type: string
+                  format: date
+                promotion:
+                  type: string
+                  enum:
+                  - G
+                  - H
+                  - J
+                  - K
+                studentNb:
+                  type: number
+      responses:
+        "201":
+          description: group created
+    put:
+      summary: Update a group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                groupName:
+                  type: string
+                groupYear:
+                  type: string
+                  format: date
+                promotion:
+                  type: string
+                  enum:
+                  - G
+                  - H
+                  - J
+                  - K
+                studentNb:
+                  type: number
+      responses:
+        "200":
+          description: group updated
+    delete:
+      summary: Delete a group
+      parameters:
+      - name: id
+        in: query
+        description: ID of the group to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: group deleted successfully
+  /students:
+    get:
+      summary: Get a list of students
+      parameters:
+      - name: studentName
+        in: query
+        description: Filter by student name
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    sex:
+                      type: string
+                      enum:
+                      - M
+                      - F
+                    birthdate:
+                      type: string
+                      format: date
+                    reference:
+                      type: string
+                    group:
+                      type: string
+                      enum:
+                      - G
+                      - H
+                      - J
+                      - K
+    post:
+      summary: Add a new student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                sex:
+                  type: string
+                  enum:
+                  - M
+                  - F
+                birthdate:
+                  type: string
+                  format: date
+                reference:
+                  type: string
+                group:
+                  type: string
+                  enum:
+                  - G
+                  - H
+                  - J
+                  - K
+      responses:
+        "201":
+          description: Student created
+    put:
+      summary: Update a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                sex:
+                  type: string
+                  enum:
+                  - M
+                  - F
+                birthdate:
+                  type: string
+                  format: date
+                reference:
+                  type: string
+                group:
+                  type: string
+                  enum:
+                  - G
+                  - H
+                  - J
+                  - K
+      responses:
+        "200":
+          description: Student updated
+    delete:
+      summary: Delete a student
+      parameters:
+      - name: id
+        in: query
+        description: ID of the student to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Student deleted successfully
+components:
+  schemas:
+    group:
+      type: object
+      properties:
+        id:
+          type: string
+        groupName:
+          type: string
+        groupYear:
+          type: string
+          format: date
+        promotion:
+          type: string
+          enum:
+          - G
+          - H
+          - J
+          - K
+        studentNb:
+          type: number
+    student:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sex:
+          type: string
+          enum:
+          - M
+          - F
+        birthdate:
+          type: string
+          format: date
+        reference:
+          type: string
+        group:
+          type: string
+          enum:
+          - G
+          - H
+          - J
+          - K
